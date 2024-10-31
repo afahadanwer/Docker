@@ -1,0 +1,84 @@
+Mongo Express is a web-based administrative interface for MongoDB, 
+designed to help users manage their MongoDB databases from a graphical interface in a web browser.
+
+Mongo Express is essentially a tool that makes it easier to manage MongoDB databases by giving you a visual interface to interact with. 
+Think of it as a control panel for your MongoDB database, which you access through a web browser.
+
+
+set up MongoDB and Mongo Express in Docker. Here’s a step-by-step guide.
+
+Step 1: Install Docker
+If Docker isn’t installed on your system, download and install Docker first.
+
+
+Step 2: Create a Docker Network
+Creating a Docker network will allow MongoDB and Mongo Express to communicate securely.
+    $ docker network create mongo-network
+
+Step 3: Run MongoDB in a Docker Container
+Now we’ll create a MongoDB container. We’ll set a username and password for security, and connect it to our network.
+
+$ docker run -d \
+    --name mongodb \
+    --network mongo-network \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=password \
+    mongo
+
+
+Explanation:
+
+-d: Runs the container in detached mode (in the background).
+--name mongodb: Names the container “mongodb”.
+--network mongo-network: Connects the MongoDB container to our custom network.
+-e: Sets environment variables for MongoDB (like username and password).
+
+
+Step 4: Run Mongo Express in a Docker Container
+Now let’s set up Mongo Express and connect it to our MongoDB container.
+
+$ docker run -d \
+    --name mongo-express \
+    --network mongo-network \
+    -p 8081:8081 \
+    -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+    -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+    -e ME_CONFIG_MONGODB_SERVER=mongodb \
+       mongo-express
+
+
+Explanation:
+
+-d: Runs the container in detached mode.
+--name mongo-express: Names the container “mongo-express”.
+--network mongo-network: Connects Mongo Express to the same network as MongoDB so they can talk to each other.
+-p 8081:8081: Maps port 8081 on your computer to port 8081 in the Mongo Express container, so you can access it in your browser.
+-e: Sets environment variables for Mongo Express, including the username, password, and MongoDB server address (the name of the MongoDB container).
+
+
+Step 5: Access Mongo Express
+Now, open your browser and go to http://localhost:8081. You should see the Mongo Express interface, where you can manage your MongoDB data visually.
+
+
+Summary of Commands
+
+$ docker network create mongo-network
+
+$ docker run -d \
+  --name mongodb \
+  --network mongo-network \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=password \
+  mongo
+
+$ docker run -d \
+  --name mongo-express \
+  --network mongo-network \
+  -p 8081:8081 \
+  -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+  -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+  -e ME_CONFIG_MONGODB_SERVER=mongodb \
+  mongo-express
+
+
+That’s it! You’ve now got MongoDB and Mongo Express running in Docker, connected and accessible from your browser. 
