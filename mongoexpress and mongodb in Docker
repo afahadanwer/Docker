@@ -23,6 +23,8 @@ $ docker run -d \
     --network mongo-network \
     -e MONGO_INITDB_ROOT_USERNAME=admin \
     -e MONGO_INITDB_ROOT_PASSWORD=password \
+    -e ME_CONFIG_BASICAUTH_USERNAME=webinterfaceusername \
+    -e ME_CONFIG_BASICAUTH_PASSWORD=webinterfacepasword \
     mongo
 
 
