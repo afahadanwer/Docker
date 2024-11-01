@@ -23,9 +23,7 @@ $ docker run -d \
     --network mongo-network \
     -e MONGO_INITDB_ROOT_USERNAME=admin \
     -e MONGO_INITDB_ROOT_PASSWORD=password \
-    -e ME_CONFIG_BASICAUTH_USERNAME=webinterfaceusername \
-    -e ME_CONFIG_BASICAUTH_PASSWORD=webinterfacepasword \
-    mongo
+       mongo
 
 
 Explanation:
@@ -46,6 +44,8 @@ $ docker run -d \
     -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
     -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
     -e ME_CONFIG_MONGODB_SERVER=mongodb \
+    -e ME_CONFIG_BASICAUTH_USERNAME=webinterfaceusername \
+    -e ME_CONFIG_BASICAUTH_PASSWORD=webinterfacepasword \  
        mongo-express
 
 
@@ -80,7 +80,9 @@ $ docker run -d \
   -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
   -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
   -e ME_CONFIG_MONGODB_SERVER=mongodb \
-  mongo-express
+  -e ME_CONFIG_BASICAUTH_USERNAME=webinterfaceusername \
+  -e ME_CONFIG_BASICAUTH_PASSWORD=webinterfacepasword \  
+      mongo-express
 
 
 That’s it! You’ve now got MongoDB and Mongo Express running in Docker, connected and accessible from your browser. 
